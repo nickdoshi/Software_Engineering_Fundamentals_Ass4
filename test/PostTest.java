@@ -122,9 +122,11 @@ public class PostTest {
         //  Test Case 1: Check the function with valid inputs
             //  Test Case 1_Test Data 1 : Valid Inputs
             Post commentTestCase1Data1 = new Post(validTitle, validBody, validTags, "Easy", "Ordinary");
+            commentTestCase1Data1.addPost();
             assertTrue(commentTestCase1Data1.addComment(validComment));
             //  Test Case 1_Test Data 2 : Valid Inputs
             Post commentTestCase1Data2 = new Post(validTitle, validBody, validTags, "Easy", "Ordinary");
+            commentTestCase1Data2.addPost();
             commentTestCase1Data2.addComment(validComment);
             assertTrue(commentTestCase1Data2.addComment("You need to create a string"));
     }
@@ -134,9 +136,11 @@ public class PostTest {
         //  Test Case 2: Check the function with invalid comment text length
             //  Test Case 2_Test Data 1 : Comment Length Too Short
             Post commentTestCase2Data1 = new Post(validTitle, validBody, validTags, "Very Difficult", "Urgently Needed");
+            commentTestCase2Data1.addPost();
             assertFalse(commentTestCase2Data1.addComment("Invalid Comment."));
             //  Test Case 2_Test Data 2 : Comment Length Too Long
             Post commentTestCase2Data2 = new Post(validTitle, validBody, validTags, "Very Difficult", "Urgently Needed");
+            commentTestCase2Data2.addPost();
             assertFalse(commentTestCase2Data2.addComment("This comment is invalid because it is so long that no one would care to read all of it."));
     }
 
@@ -145,9 +149,11 @@ public class PostTest {
         //  Test Case 3: Check the function with invalid capitalisation for first word
             //  Test Case 3_Test Data 1 : Invalid Capitalisation
             Post commentTestCase3Data1 = new Post(validTitle, validBody, validTags, "Very Difficult", "Urgently Needed");
+            commentTestCase3Data1.addPost();
             assertFalse(commentTestCase3Data1.addComment("this comment has invalid Comment Capitalisation."));
             //  Test Case 3_Test Data 2 : First Character must be Upper Case
             Post commentTestCase3Data2 = new Post(validTitle, validBody, validTags, "Very Difficult", "Urgently Needed");
+            commentTestCase3Data2.addPost();
             assertFalse(commentTestCase3Data2.addComment("1 st: This Comment Also Has Invalid Capitalisation."));
     }
 
@@ -156,12 +162,14 @@ public class PostTest {
         //  Test Case 4: Check the function for comment, but exceeds limit for easy/ordinary Post
             //  Test Case 4_Test Data 1 : Comment Limit Exceeded for Easy/Ordinary Post
             Post commentTestCase4Data1 = new Post(validTitle, validBody, validTags, "Easy", "Ordinary");
+            commentTestCase4Data1.addPost();
             commentTestCase4Data1.addComment(validComment);
             commentTestCase4Data1.addComment(validComment);
             commentTestCase4Data1.addComment(validComment);
             assertFalse(commentTestCase4Data1.addComment(validComment));
             //  Test Case 4_Test Data 2 : Comment Limit Exceeded for Easy/Ordinary Post
             Post commentTestCase4Data2 = new Post(validTitle, validBody, validTags, "Easy", "Ordinary");
+            commentTestCase4Data2.addPost();
             commentTestCase4Data2.addComment(validComment);
             commentTestCase4Data2.addComment(validComment);
             commentTestCase4Data2.addComment(validComment);
@@ -173,12 +181,14 @@ public class PostTest {
         // Test Case 5: Check the function for valid comment, but exceeds limit for Difficult/Very Difficult Post
             //  Test Case 5_Test Data 1 : Valid Inputs
             Post commentTestCase5Data1 = new Post(validTitle, validBody, validTags, "Difficult", "Immediately Needed");
+            commentTestCase5Data1.addPost();
             for (int i = 0; i < 5; i++) {
                 commentTestCase5Data1.addComment(validComment);
             }
             assertFalse(commentTestCase5Data1.addComment(validComment));
             //  Test Case 5_Test Data 2 : Valid Inputs
             Post commentTestCase5Data2 = new Post(validTitle, validBody, validTags, "Very Difficult", "Highly Needed");
+            commentTestCase5Data2.addPost();
             for (int i = 0; i < 5; i++) {
                 commentTestCase5Data2.addComment(validComment);
             }
@@ -190,12 +200,14 @@ public class PostTest {
         // Test Case 6: Check the function for invalid comment, but exceeds limit for Difficult/Very Difficult Post
             //  Test Case 6_Test Data 1 : Valid Inputs
             Post commentTestCase6Data1 = new Post(validTitle, validBody, validTags, "Difficult", "Highly Needed");
+            commentTestCase6Data1.addPost();
             for (int i = 0; i < 5; i++) {
                 commentTestCase6Data1.addComment(validComment);
             }
             assertFalse(commentTestCase6Data1.addComment(invalidComment));
             //  Test Case 6_Test Data 2 : Valid Inputs
             Post commentTestCase6Data2 = new Post(validTitle, validBody, validTags, "Very Difficult", "Immediately Needed");
+            commentTestCase6Data2.addPost();
             for (int i = 0; i < 5; i++) {
                 commentTestCase6Data2.addComment(validComment);
             }

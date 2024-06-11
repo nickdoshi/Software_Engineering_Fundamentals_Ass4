@@ -1,4 +1,12 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 public class Post {
     // Post Condition Variables
     // Title
@@ -18,11 +26,11 @@ public class Post {
     private final int maxCommentWords = 10;
     private final int maxNumComments = 5;
     private final int maxNumCommentsEasy = 3;
-
-    
+    // Database
+    private final String directoryName = "PostDataBases";
 
     // Post instance Variables
-    private int postID;
+    private String postFileName;
     private String postTitle;
     private String postBody;
     private String[] postTags;
@@ -66,6 +74,41 @@ and "Highly Needed" statuses. "Very Difficult" and "Difficult" posts should not 
     public boolean addPost() 
     {
         if (isValidTitle() && isValidBody() && isValidTags() && isValidType() && isValidEmergencyType()) {
+            // Unique file name based on current time
+            String fileName = Long.toString(System.currentTimeMillis()) + ".txt";
+            this.postFileName = fileName;
+            // Make directory if it does not exist
+            File directory = new File(this.directoryName);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            // Create File within directory
+            File file = new File(directory, fileName);
+            try {
+                BufferedWriter postWriter = new BufferedWriter(new FileWriter(file));
+                postWriter.write("\n-------------------------CODEQA PLATFORM-------------------------");
+                postWriter.write("\n| Home | Top | Search | Profile | Settings |           | Logout |");
+                postWriter.write("\n\n");
+                postWriter.write(this.postTitle + "\n\n");
+                postWriter.write(this.postBody + "\n\n");
+                StringBuilder tagString = new StringBuilder();
+                for (String tag : this.postTags) {
+                    tagString.append(tag);
+                    tagString.append("-");
+                }
+                postWriter.write(tagString.toString().substring(0, tagString.length() - 1));
+                postWriter.write("\n");
+                postWriter.write("\n");
+                postWriter.write("Auther: Nicholas Doshi\n");
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                Date curDate = new Date();
+                postWriter.write("Date: " + sdf.format(curDate));
+                postWriter.write("\n\n");
+                postWriter.write("Comments: \n");
+                postWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         return false;
@@ -141,6 +184,7 @@ and "Highly Needed" statuses. "Very Difficult" and "Difficult" posts should not 
                 isValid = true;
             }
         }
+        // Only Easy can be Ordinary
         if (this.postType.equals("Easy") && !this.postEmergencyType.equals("Ordinary")) {
             isValid = false;
         } else if ((this.postType.equals("Difficult") || this.postType.equals("Very Difficult")) && 
@@ -183,6 +227,24 @@ and "Highly Needed" statuses. "Very Difficult" and "Difficult" posts should not 
     }
 
     private void putCommentInDataBase(String comment) {
+        // Add comments to Comment List
         postComments.add(comment);
+        // Access directory and file name for Post in database
+        File directory = new File(this.directoryName);
+        File file = new File(directory, this.postFileName);
+
+        try {
+            BufferedWriter commentWriter = new BufferedWriter(new FileWriter(file, true));  // Append Mode
+            // Write comment to file
+            commentWriter.write("\n" + comment + "\n");
+            // Write current date and time
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+            Date curDate = new Date();
+            commentWriter.write("Date: " + sdf.format(curDate));
+            commentWriter.write("\n");
+            commentWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
