@@ -18,6 +18,6 @@ public class main {
             postTestCase1Data1.addComment("I agree with the above comment");
             System.out.println("Added 3 comments to the bottom of the post");
         }
-        
+        sc.close();
     }
 }
